@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Project1_Draft</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .main-map .pie-1 {
+            flex: 48%;
+            padding: 5px;
+        }
+
+        .main-chart .pie-2 {
+
+            flex: 48%;
+            padding: 5px;
+        }
+
+
+        .axis-label {
+            color: black;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pie-container {
+            display: flex;
+        }
+
+        .title {
+            text-align: center;
+            /* background-color: aqua; */
+        }
+        /* .map-legend > div >table
+        {
+            width: 50%;
+            text-align: center;
+            align-items: center;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <h1> London's 1854 cholera epidemic </h1>
+    </div>
+    <div class="container"></div>
+    <div class="title">
+        <h2>Death by Age and Gender</h2>
+    </div>
+    <div class="pie-container"></div>
+    <script type="text/javascript">
+        const margin = { top: 10, right: 10, bottom: 20, left: 10 };
+        const width = window.innerWidth / 3;
+        const height = window.innerHeight;
+
+        const mwidth = 1000;
+        const mheight = 1000;
+        const radius = mwidth / 3 - margin.left - margin.right;
+
+        //SVG for Legend
+        var svgMain = d3.select(".container")
+            .append("div")
+            .attr("class", "main-map-container")
+
+            var svgMapTitle = d3.select(".main-map-container")
+            .append("div")
+            .attr("class", "map-legend")
+            .append("div")
+            .text("Map Legend")
+            .style("font-family", "arial")
+            .style("font-size", 16)
+            .style("font-weight", 800)
+            .append("table")
+            .attr("class", "map-legend-table")
+            .append("tr")
+            
+            svgMapTitle
+            .append("th")
+            .text("Male")
+
+            svgMapTitle
+            .append("th")
+            .text("Female")
+
+            svgMapTitle
+            .append("th")
+            .text("Pump")
+
+            svgMapTitle = d3.select(".map-legend-table")
+            .append("tr")
+
+            // svgMapTitle
+            // .append("th")
+            // // .append("svg")
+            // .append("circle")
+            // .attr("r", 2)
+            // .style("fill", "red")
+
+            // svgMapTitle
+            // .append("th")
+            // // .append("svg")
+            // .append("circle")
+            // .attr("r",2)
+            // .style("fill", "blue")
+
+            svgMapTitle
+            .append("th")
+            .append("li")
+            .style("background-color", "orange")
+
+            svgMapTitle
+            .append("th")
+            .append("li")
+            .style("background-color", "blue")
+
+            svgMapTitle
+            .append("th")
+            .append("li")
+            .style("background-color", "black")
+
+
+//Map SVG
+            var svgMap = d3.select(".main-map-container")
+            .append("svg")
+            .attr("class", "main-map")
+            .attr("viewBox", "150 100 1000 1000")
+            .attr("width", "90%")
+            .attr("height", height)
+
+        var pieChartData = [
+            { group: '0-10', value: { male: 65, female: 78 } },
+            { group: '11-20', value: { male: 29, female: 19 } },
+            { group: '21-40', value: { male: 34, female: 24 } },
+            { group: '41-60', value: { male: 22, female: 35 } },
+            { group: '61-80', value: { male: 46, female: 45 } },
+            { group: '>80', value: { male: 88, female: 86 } },
+        ];
+
+
+        var MAP_SCALE = 50;
+        var CHART_SCALE = 40;
+        var xscl = d3.scaleLinear();
+        var yscl = d3.scaleLinear();
+
+        var xy = [];
+
+        const masterDeathData = d3.csv(
+            "https://raw.githubusercontent.com/aleroai/choleraDataVizProject/main/deaths_age_sex.csv"
+        );
+
+        function drawStreetMap() {
+            d3.json(
+                "https://raw.githubusercontent.com/aleroai/choleraDataVizProject/main/streets.json"
+            ).then((data) => {
+                xy = data;
+
+                var myline = d3
+                    .line()
+                    .x(function (d) {
+                        return xscl(d.x) * MAP_SCALE;
+                    }) // apply the x scale to the x data
+                    .y(function (d) {
+                        return yscl(d.y) * MAP_SCALE;
+                    });
+
+                svgMap
+                    .selectAll(".line")
+                    .data(xy)
+                    .enter()
+                    .append("path")
+                    .attr("class", "line")
+                    .attr("d", myline)
+                    .style("fill", "none")
+                    .style("stroke", "grey")
+                    .style("stroke-width", 2)
+                    .append("text")
+                    .style("fill", "Black")
+                    .style("font-size", "15 px")
+                    .attr("transform", "translate(380,250) rotate(22)")
+                    .text("BROAD STREET");
+            });
+        }
+
+        function drawPumpsOnMap() {
+            d3.csv(
+                "https://raw.githubusercontent.com/aleroai/choleraDataVizProject/main/pumps.csv"
+            ).then((pumpData) => {
+                svgMap
+                    .selectAll(".pump")
+                    .data(pumpData)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "pump")
+                    .attr("width", pumpData.length / 1.5)
+                    .attr("height", pumpData.length / 1.5)
+                    .attr("x", function (d) {
+                        return xscl(d.x) * MAP_SCALE;
+                    })
+                    .attr("y", function (d) {
+                        return yscl(d.y) * MAP_SCALE;
+                    })
+                    .style("fill", "black");
+            });
+        }
+
+        function drawDeathsOnMap(startIndex, endIndex, radius = 5) {
+            masterDeathData.then((deathData) => {
+                deathDataRef = deathData;
+
+                if (startIndex != null && endIndex != null) {
+                    deathDataRef = deathData.slice(startIndex, endIndex);
+                }
+
+                const deathClassName = "deaths"
+
+                d3.selectAll(`.${deathClassName}`).remove();
+                d3.selectAll(".each-death").remove();
+
+                svgMap
+                    .selectAll(`.${deathClassName}`)
+                    .attr("class", deathClassName)
+                    .data(deathDataRef)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "each-death")
+                    .attr("r", radius)
+                    .attr("cx", function (d) {
+                        return xscl(d.x) * MAP_SCALE;
+                    })
+                    .attr("cy", function (d) {
+                        return yscl(d.y) * MAP_SCALE;
+                    })
+                    .style("fill", function (d) {
+                        //male 0, Female 1
+                        if (d.gender == 1) {
+                            return "blue";
+                        }
+                        else { return "orange" }
+                    });
+            });
+        }
+
+        function drawDeathsByDaysBarChart() {
+            d3.csv(
+                "https://raw.githubusercontent.com/aleroai/choleraDataVizProject/main/deathdays.csv"
+            ).then((dd) => {
+
+                //SVG for chart on the the right side
+                var svgChart = d3
+                    .select(".container")
+                    .append("svg")
+                    .attr("class", "main-chart")
+                    .attr("viewBox", "0 200 1000 1000")
+                    .attr("width", "70%")
+                    .attr("height", "70%")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                data = dd.map((current, index, obj) => ({
+                    date: current.date,
+                    value: parseInt(current.deaths),
+                    start: index,
+                    end: index + parseInt(current.deaths) + 1
+                })).filter(e => e.value > 0);
+
+                var y = d3
+                    .scaleLinear()
+                    .domain([
+                        0,
+                        d3.max(data, function (d) {
+                            return +d.value;
+                        }),
+                    ])
+                    .range([height - margin.bottom, margin.top * 20]);
+
+
+
+                var x = d3.scaleBand().range([0, width + margin.right * 30]).padding(0.3)
+                    .domain(data.map(function (d) { return d.date; }));
+
+
+                //Add x axis to svg
+                svgChart
+                    .append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(
+                        d3.axisBottom(x).ticks(data.length)
+                            .tickFormat(e => e)
+                    )
+                    .selectAll("text")
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
+
+                svgChart
+                    .append("text")
+                    .attr("text-anchor", "middle")
+                    .attr(
+                        "transform",
+                        "translate(" +
+                        width / 2 +
+                        "," +
+                        (height + margin.bottom * 3) +
+                        ")"
+                    )
+                    .text("Dates");
+
+                svgChart
+                    .append("g")
+                    .attr("class", "axis-label")
+                    .call(d3.axisRight(y))
+                // .style("margin", margin.left)
+                // .style("padding", margin.left);
+
+                svgChart
+                    .append("text")
+                    .attr("text-anchor", "middle")
+                    .attr(
+                        "transform",
+                        "translate(" +
+                        margin.bottom * 3 +
+                        "," +
+                        height / 2 +
+                        ")rotate(-90)"
+                    )
+                    .text("Number of Deaths");
+
+                const normalFillColor = "#353935"
+                svgChart
+                    .selectAll(".bar-chart")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar-chart")
+                    .attr("x", function (d) {
+                        return x(d.date)
+                    })
+                    .attr("y", (d) => y(d.value))
+                    .attr("fill", normalFillColor)
+                    .attr("width", x.bandwidth)
+                    .attr("height", function (d) { return height - y(d.value); })
+                    .on("mouseover", function (event, d) {
+                        drawDeathsOnMap(d.start, d.end, 10);
+                        d3.select(this).attr("fill", "red");
+                    })
+                    .on("mouseout", function (event, d) {
+                        d3.select(this).attr("fill", normalFillColor);
+                        drawDeathsOnMap();
+                    })
+            })
+
+        }
+
+
+        function drawDeathsByAgeGroupPieChart() {
+
+
+            var svgPie = d3.select(".pie-container")
+                .append("svg")
+                .attr("class", "pie-1")
+                .attr("viewBox", `0 0 ${mwidth} ${mheight}`)
+
+            let data = pieChartData;
+
+            var g = svgPie.append("g")
+                .attr("transform", "translate(" + mwidth / 2 + "," + mheight / 2 + ")");
+
+            var ordScale = d3.scaleOrdinal()
+                .domain(data)
+                .range(d3.schemeSet2);
+
+            var pie = d3.pie().value(function (d) {
+                return d.value.male + d.value.female;
+            });
+
+            var path = d3.arc()
+                .outerRadius(radius)
+                .innerRadius(0);
+
+            var label = d3.arc()
+                .outerRadius(radius - margin.left)
+                .innerRadius(radius / 1.5);
+
+            var arc = g.selectAll("arc")
+                .data(pie(data))
+                .enter()
+
+
+
+            arc.append("path")
+                .attr("d", path)
+                .attr("fill", function (d) { return ordScale(d.data.group); })
+                .attr("class", "data-group")
+                .on("mouseover", function (evt, data) {
+                    drawDeathsBySexPieChart(evt, data)
+                    d3.select(this).attr("fill", "red")
+                })
+                .on("mouseout", function (evt, data) {
+                    d3.select(this).attr("fill", ordScale(data.data.group))
+                })
+
+            const dataSum = d3.sum(data, d => (d.value.female + d.value.male))
+
+            arc.append("text")
+                .attr("transform", function (d) {
+                    return "translate(" + label.centroid(d) + ")";
+                })
+                .text(d => {
+                    return `${d.data.group}
+                    (${Math.round((d.value / dataSum) * 100)}%)`
+                })
+                .style("font-family", "arial")
+                .style("font-size", 12);
+
+
+        }
+
+        function drawDeathsBySexPieChart(event, val = pieChartData[0]) {
+
+            const pieClassName = ".pie-2"
+            d3.select(pieClassName).remove();
+
+            data = [
+                { group: "male", value: val?.data?.value.male || val.value.male },
+                { group: "female", value: val?.data?.value.female || val.value.female }
+            ]
+            var svgBySexPie = d3.select(".pie-container")
+                .append("svg")
+                .attr("class", "pie-2")
+                .attr("viewBox", `0 0 ${mwidth} ${mheight}`);
+
+            const dataSum = d3.sum(data, d => d.value)
+
+            var g = svgBySexPie.append("g")
+                .attr("transform", "translate(" + mwidth / 2 + "," + mheight / 2 + ")");
+
+            // Step 4
+            var ordScale = d3.scaleOrdinal()
+                .domain(data)
+                .range(['orange', 'blue']);
+
+            // Step 5
+            var pie = d3.pie().value(function (d) {
+                return d.value;
+            });
+
+            var arc = g.selectAll("arc")
+                .data(pie(data))
+                .enter();
+
+            // Step 6
+            var path = d3.arc()
+                .outerRadius(radius)
+                .innerRadius(0);
+
+            arc.append("path")
+                .attr("d", path)
+                .attr("fill", function (d) { return ordScale(d.data.group); });
+
+            // Step 7
+            var label = d3.arc()
+                .outerRadius(radius)
+                .innerRadius(0);
+
+            arc.append("text")
+                .attr("transform", function (d) {
+                    return "translate(" + label.centroid(d) + ")";
+                })
+                // .text(function (d) { return `${d.data.group}  ${(d.data.value/dataSum)*100}`; })
+                .text(d => (`${d.data.group}  ${Math.round((d.data.value / dataSum) * 100)}%`))
+                .style("font-family", "arial")
+                .style("font-size", 18);
+
+        }
+
+
+        drawStreetMap();
+        drawPumpsOnMap();
+        drawDeathsOnMap();
+        drawDeathsByDaysBarChart();
+        drawDeathsByAgeGroupPieChart();
+        drawDeathsBySexPieChart();
+
+
+
+
+    </script>
+
+</body>
+
+</html>
