@@ -6,14 +6,25 @@
     <title>Project1_Draft</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        .main-map .pie-1 {
-            flex: 48%;
+        .main-map {
+            flex: 35%;
             padding: 5px;
         }
 
-        .main-chart .pie-2 {
+        .main-chart {
+            flex: 50%;
+            justify-items: right;
+            padding: 5px;
+        }
 
-            flex: 48%;
+         .pie-1 {
+            flex: 40%;
+            padding: 5px;
+        }
+
+        .pie-2 {
+
+            flex: 40%;
             padding: 5px;
         }
 
@@ -26,8 +37,8 @@
 
         .container {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            /* align-items: center;
+            justify-content: center; */
         }
 
         .pie-container {
@@ -76,9 +87,9 @@
         const radius = mwidth / 3 - margin.left - margin.right;
 
         //SVG for Legend
-        var svgMain = d3.select(".container")
-            .append("div")
-            .attr("class", "main-map-container")
+        // var svgMain = d3.select(".container")
+            // .append("div")
+            // .attr("class", "main-map-container")
 
             // var svgMapTitle = d3.select(".main-map-container")
             var svgMapTitle = d3.select(".legend")
@@ -132,12 +143,13 @@
 
 
 //Map SVG
-            var svgMap = d3.select(".main-map-container")
+            var svgMap = d3.select(".container")
             .append("svg")
             .attr("class", "main-map")
-            .attr("viewBox", "150 300 1000 1000")
-            .attr("width", "90%")
-            .attr("height", height)
+            .attr("viewBox", "0 0 1000 1000")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("width", 500)
+            // .attr("height", height)
 
         var pieChartData = [
             { group: '0-10', value: { male: 65, female: 78 } },
@@ -262,10 +274,11 @@
                     .select(".container")
                     .append("svg")
                     .attr("class", "main-chart")
-                    .attr("viewBox", "0 200 1000 1000")
-                    .attr("width", "70%")
-                    .attr("height", "70%")
-                    .attr("transform", `translate(${margin.left},${margin.top})`);
+                    .attr("viewBox", "0 0 1000 1000")
+                    .attr("preserveAspectRatio", "xMinYMin meet")
+                    .attr("width", 500)
+                    // .attr("height", "70%")
+                    // .attr("transform", `translate(${margin.left},${margin.top})`);
 
                 data = dd.map((current, index, obj) => ({
                     date: current.date,
