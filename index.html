@@ -38,18 +38,28 @@
             text-align: center;
             /* background-color: aqua; */
         }
-        /* .map-legend > div >table
-        {
-            width: 50%;
-            text-align: center;
-            align-items: center;
-        } */
+        .legend {
+            display: flex;
+        }
+        .map-legend {
+            /* width: 35%; */
+            flex:40%;
+            padding: 5px;
+        }
+        .bar-legend {
+            /* width: 35%; */
+            flex: 40%;
+            padding: 5px;
+        }
     </style>
 </head>
 
 <body>
     <div class="title">
         <h1> London's 1854 cholera epidemic </h1>
+    </div>
+    <div class="legend">
+       
     </div>
     <div class="container"></div>
     <div class="title">
@@ -70,7 +80,8 @@
             .append("div")
             .attr("class", "main-map-container")
 
-            var svgMapTitle = d3.select(".main-map-container")
+            // var svgMapTitle = d3.select(".main-map-container")
+            var svgMapTitle = d3.select(".legend")
             .append("div")
             .attr("class", "map-legend")
             .append("div")
@@ -97,20 +108,6 @@
             svgMapTitle = d3.select(".map-legend-table")
             .append("tr")
 
-            // svgMapTitle
-            // .append("th")
-            // // .append("svg")
-            // .append("circle")
-            // .attr("r", 2)
-            // .style("fill", "red")
-
-            // svgMapTitle
-            // .append("th")
-            // // .append("svg")
-            // .append("circle")
-            // .attr("r",2)
-            // .style("fill", "blue")
-
             svgMapTitle
             .append("th")
             .append("li")
@@ -126,12 +123,19 @@
             .append("li")
             .style("background-color", "black")
 
+            var svgBarChartTitle = d3.select(".legend")
+            .append("div")
+            .attr("class", "bar-legend")
+            .text("Death by Days")
+            .style("font-weight", 800)
+            .style('font-size', 18)
+
 
 //Map SVG
             var svgMap = d3.select(".main-map-container")
             .append("svg")
             .attr("class", "main-map")
-            .attr("viewBox", "150 100 1000 1000")
+            .attr("viewBox", "150 300 1000 1000")
             .attr("width", "90%")
             .attr("height", height)
 
