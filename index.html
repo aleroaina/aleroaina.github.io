@@ -5,80 +5,21 @@
     <meta charset="utf-8" />
     <title>Project1_Draft</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        .main-map {
-            flex: 35%;
-            padding: 5px;
-        }
+    <link rel="stylesheet" href="styles.css" />
 
-        .main-chart {
-            flex: 50%;
-            justify-items: right;
-            padding: 5px;
-        }
-
-         .pie-1 {
-            flex: 40%;
-            padding: 5px;
-        }
-
-        .pie-2 {
-
-            flex: 40%;
-            padding: 5px;
-        }
-
-
-        .axis-label {
-            color: black;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .container {
-            display: flex;
-            /* align-items: center;
-            justify-content: center; */
-        }
-
-        .pie-container {
-            display: flex;
-        }
-
-        .title {
-            text-align: center;
-            /* background-color: aqua; */
-        }
-        .legend {
-            display: flex;
-        }
-        .map-legend {
-            /* width: 35%; */
-            flex:40%;
-            padding: 5px;
-        }
-        .bar-legend {
-            /* width: 35%; */
-            flex: 40%;
-            padding: 5px;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="grid-container">
-        <div class="side-nav">
-            <ul>
-                <li><p><a href="index.html">Visualization</a> </p></li>
-                <!-- <li><p><a href="documentation.html">Documentation</a> </p></li> -->
-                <li><p><a href="videolink.html">Video</a> </p></li>
-            </ul>
-        </div>
+    <div class="topnav">
+            <a href="index.html">Visualization</a>
+            <a href="video.html">Presentation</a>
+            <a href="documentation.html">Documentation</a>
+    </div>
     <div class="title">
         <h1> London's 1854 cholera epidemic </h1>
     </div>
     <div class="legend">
-       
+
     </div>
     <div class="container"></div>
     <div class="title">
@@ -96,11 +37,11 @@
 
         //SVG for Legend
         // var svgMain = d3.select(".container")
-            // .append("div")
-            // .attr("class", "main-map-container")
+        // .append("div")
+        // .attr("class", "main-map-container")
 
-            // var svgMapTitle = d3.select(".main-map-container")
-            var svgMapTitle = d3.select(".legend")
+        // var svgMapTitle = d3.select(".main-map-container")
+        var svgMapTitle = d3.select(".legend")
             .append("div")
             .attr("class", "map-legend")
             .append("div")
@@ -111,38 +52,38 @@
             .append("table")
             .attr("class", "map-legend-table")
             .append("tr")
-            
-            svgMapTitle
+
+        svgMapTitle
             .append("th")
             .text("Male")
 
-            svgMapTitle
+        svgMapTitle
             .append("th")
             .text("Female")
 
-            svgMapTitle
+        svgMapTitle
             .append("th")
             .text("Pump")
 
-            svgMapTitle = d3.select(".map-legend-table")
+        svgMapTitle = d3.select(".map-legend-table")
             .append("tr")
 
-            svgMapTitle
+        svgMapTitle
             .append("th")
             .append("li")
             .style("background-color", "orange")
 
-            svgMapTitle
+        svgMapTitle
             .append("th")
             .append("li")
             .style("background-color", "blue")
 
-            svgMapTitle
+        svgMapTitle
             .append("th")
             .append("li")
             .style("background-color", "black")
 
-            var svgBarChartTitle = d3.select(".legend")
+        var svgBarChartTitle = d3.select(".legend")
             .append("div")
             .attr("class", "bar-legend")
             .text("Death by Days")
@@ -150,14 +91,14 @@
             .style('font-size', 18)
 
 
-//Map SVG
-            var svgMap = d3.select(".container")
+        //Map SVG
+        var svgMap = d3.select(".container")
             .append("svg")
             .attr("class", "main-map")
             .attr("viewBox", "0 0 1000 1000")
             .attr("preserveAspectRatio", "xMinYMin meet")
             .attr("width", 500)
-            // .attr("height", height)
+        // .attr("height", height)
 
         var pieChartData = [
             { group: '0-10', value: { male: 65, female: 78 } },
@@ -285,8 +226,8 @@
                     .attr("viewBox", "0 0 1000 1000")
                     .attr("preserveAspectRatio", "xMinYMin meet")
                     .attr("width", 500)
-                    // .attr("height", "70%")
-                    // .attr("transform", `translate(${margin.left},${margin.top})`);
+                // .attr("height", "70%")
+                // .attr("transform", `translate(${margin.left},${margin.top})`);
 
                 data = dd.map((current, index, obj) => ({
                     date: current.date,

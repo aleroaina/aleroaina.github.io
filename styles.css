@@ -1,0 +1,81 @@
+.main-map {
+    flex: 35%;
+    padding: 5px;
+}
+
+.main-chart {
+    flex: 50%;
+    justify-items: right;
+    padding: 5px;
+}
+
+.pie-1 {
+    flex: 40%;
+    padding: 5px;
+}
+
+.pie-2 {
+
+    flex: 40%;
+    padding: 5px;
+}
+
+.axis-label {
+    color: black;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.pie-container {
+    display: flex;
+}
+
+.title {
+    text-align: center;
+    /* background-color: aqua; */
+}
+
+.legend {
+    display: flex;
+}
+
+.map-legend {
+    /* width: 35%; */
+    flex: 40%;
+    padding: 5px;
+}
+
+.bar-legend {
+    /* width: 35%; */
+    flex: 40%;
+    padding: 5px;
+}
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .topnav a.active {
+    background-color: #04aa6d;
+    color: white;
+  }

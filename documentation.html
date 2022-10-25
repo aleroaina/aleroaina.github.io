@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Project1_Draft</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+    <div class="topnav">
+            <a href="index.html">Visualization</a>
+            <a href="video.html">Presentation</a>
+            <a href="documentation.html">Documentation</a>
+    </div>
+    <div class="header">
+        <h2> London's 1854 cholera epidemic</h2>
+        <h3>D3 Data Visualization by Alero Jakpa (Aina)</h3>
+    </div>
+    <div class="main">
+        <h1> Introduction</h1>
+        <p> The goal of this project is to create a visualization of Dr. John Snow's map of the London's 1854 cholera epidemic using D3. The map should contain information about the death population distribution, and identify the pumps around the street. By doing this, I aim to recreate the relationship that John Snow found  between the pumps and the population.  Next, add additional charts that can interact with the map and provide insight on the cholera epidemic. My first  step is to learn D3 and its libraries and get familiar with CSS libraries. Practice graphs such as bar chart, pie chart, scatter plots, and play around with understanding data set types.
+        </p>
+        
+        <h1> Data</h1>
+        <p>To create the map and additional charts, the project provided the following data files.
+        <br>1. Streets.json: An array of X and Y coordinates that represent the streets of London in 1984.
+        <br>2. Pumps.csv- Contains a total of 13 pumps around the epidemic area
+        <br>3. Death_age_sex.csv: Contains the x and y coordinates of the death location, the gender, age and sex of each victim.
+        <br>4. Death days: Contains death count for each day of the outbreak. Each death in the death_age_sex.csv file is sequentially linked to the death_days file. 
+        </p>
+
+        <h1> Data</h1>
+        <img src="D3draft.JPG">
+
+        <h1> Design and Implementation Steps</h1>
+        <p>
+        <br> 1. Understand the requirement
+        <br> 2. Create a design document
+        <br> 3. Determine required graphs for this project
+        <br> 4. Learn how to draw basic charts in D3.
+        <br> 5. Study the dataset provided.
+        <br> 6. Create each graph in separate HTML files
+        <br> 7. Merge each graph into one HTML file
+        <br> 8. Design dashboard using CSS 
+        <br> 9. Design the interaction between each graph.
+        <br> 10. Implement the dashboard.
+        <br> 11. Fix bugs 
+        <br> 12. Test the visualization on different displays
+        <br> 13. Create a webpage using GitHub and upload files.
+        <br> 14. Make a video and finalize the design document.
+         </p>
+
+        <h1> Outcome and Design choices</h1>
+        <p>
+        <br> 1. Using the streets json file, I created the map of London using D3 line library. To account for color blindness, I used orange blue and black for the map legend.
+        <br> 2. With the death days file, I created the bar chart. The bar chart and the map are interactive. The bar chart is grey by default, and turns red on mouse over.
+        <br> 3. The next set of graphs are pie charts- one for age group and the other for gender.  Both charts are interactive. When you select any age group, you will see the gender distribution on the right.
+        <img src="mapbarchart.JPG">
+        <img src="agegroupgender.JPG">
+        </p>
+
+        <h1>References</h1>
+          <p> 
+        <br> 1. https://www.geeksforgeeks.org/d3-js-data-driven-documents/
+        <br> 2. An Introduction to Designing with D3 by Scott Murray | Interactive data visualization for the web.
+        <br> 3. https://github.com/d3/d3
+        <br> 4. https://github.com/scotthmurray/d3-book/blob/master/chapter_13/01_pie.html
+          </p>
+
+    </div>
+
+
+</body>
+
+</html>
